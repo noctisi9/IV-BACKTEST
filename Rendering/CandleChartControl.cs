@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;

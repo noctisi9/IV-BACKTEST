@@ -1,3 +1,5 @@
+using System;
+
 namespace BoomCrashBacktester.Models;
 
 /// <summary>
