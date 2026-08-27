@@ -1,0 +1,62 @@
+<Window x:Class="BoomCrashBacktester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:render="clr-namespace:BoomCrashBacktester.Rendering"
+        Title="Boom/Crash Backtester" Height="800" Width="1280"
+        Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="64"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top bar: timeframe (left), asset (right) -->
+        <Grid Grid.Row="0" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
+                <TextBlock Text="Timeframe:" VerticalAlignment="Center" Foreground="#202020" Margin="0,0,8,0"/>
+                <ComboBox x:Name="TimeframeCombo" Width="90" SelectionChanged="TimeframeCombo_SelectionChanged"/>
+                <Button x:Name="FetchButton" Content="Fetch" Width="60" Margin="12,0,0,0" Click="FetchButton_Click"/>
+                <TextBlock x:Name="DownloadStatusText" Margin="16,0,0,0" VerticalAlignment="Center" Foreground="#808080" FontSize="12"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0">
+                <TextBlock Text="Asset:" VerticalAlignment="Center" Foreground="#202020" Margin="0,0,8,0"/>
+                <ComboBox x:Name="AssetCombo" Width="120" SelectionChanged="AssetCombo_SelectionChanged"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Chart fills all remaining space -->
+        <Border Grid.Row="1" BorderBrush="#DDDDDD" BorderThickness="0,1,0,1">
+            <render:CandleChartControl x:Name="Chart"/>
+        </Border>
+
+        <!-- Playback / rewind bar -->
+        <Grid Grid.Row="2" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
+                <Button x:Name="StepBackButton" Content="⏮" Width="36" Click="StepBackButton_Click" Margin="0,0,4,0"/>
+                <Button x:Name="PlayPauseButton" Content="▶" Width="48" Click="PlayPauseButton_Click" Margin="0,0,4,0"/>
+                <Button x:Name="StepForwardButton" Content="⏭" Width="36" Click="StepForwardButton_Click" Margin="0,0,12,0"/>
+                <TextBlock Text="Speed:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Slider x:Name="SpeedSlider" Width="100" Minimum="0.2" Maximum="10" Value="2" ValueChanged="SpeedSlider_ValueChanged"/>
+            </StackPanel>
+
+            <Slider Grid.Column="1" x:Name="ScrubSlider" VerticalAlignment="Center" Margin="16,0"
+                    Minimum="0" Maximum="0" ValueChanged="ScrubSlider_ValueChanged"
+                    IsMoveToPointEnabled="True"/>
+
+            <TextBlock Grid.Column="2" x:Name="CursorTimeText" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#202020"/>
+        </Grid>
+    </Grid>
+</Window>
